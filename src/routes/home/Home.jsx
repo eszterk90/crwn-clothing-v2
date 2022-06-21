@@ -1,4 +1,9 @@
-const categories = [
+import Directory from '../../components/directory/directory-component'
+import {Outlet} from 'react-router-dom'
+
+const Home = () => {
+
+  const categories = [
     {
       "id": 1,
       "title": "hats",
@@ -16,14 +21,22 @@ const categories = [
     },
     {
       "id": 4,
-      "title": "womens",
+      "title": "women",
       "imageUrl": "https://i.ibb.co/GCCdy8t/womens.png"
     },
     {
       "id": 5,
-      "title": "mens",
+      "title": "men",
       "imageUrl": "https://i.ibb.co/R70vBrQ/men.png"
     }
   ]
+  return (
+    <div>
+        <Directory categories={categories}/>
+        <Outlet/>
+    </div>
+    
+  );
+};
 
-  export default categories;
+export default Home;
