@@ -1,10 +1,14 @@
-import React, {useEffect} from 'react'
-import './sign-in.styles.scss'
+import React, {useEffect, useState} from 'react'
+import './authentication.styles.scss'
 import {auth, signInWithGooglePopup, createUserDocumentFromAuth, signInWithGoogleRedirect} from '../../utils/firebase/firebase.utils'
 import {getRedirectResult} from 'firebase/auth'
 import SignUpForm from '../../components/sign-up/SignUpForm'
+import SignInForm from '../../components/sign-in/SignInForm'
+import FormInput from '../../components/form-input/FormInput'
 
-function SignIn() {
+
+function Authentication() {
+
 
 
 // on first mount run the useEffect: inside call the asyncrhonous getRedirectResult. If authentication successful -> give response 
@@ -35,13 +39,15 @@ function SignIn() {
         // create user
         //const userDocRef = await createUserDocumentFromAuth(user);
     //}
+
   return (
-    <div>
-        <button onClick={logGoogleUser}>Sign in with google Popup</button>
+    <div className='authentication-container'>
+        <SignInForm/>
+        {/*<button onClick={logGoogleUser}>SIGN IN WITH GOOGLE</button>*/}
         {/* <button onClick={signInWithGoogleRedirect}>Sign in with google Redirect</button> */}
         <SignUpForm/>
     </div>
   )
 }
 
-export default SignIn
+export default Authentication
