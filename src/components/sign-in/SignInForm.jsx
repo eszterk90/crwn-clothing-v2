@@ -1,5 +1,8 @@
 import React, {useState} from 'react'
-import {auth, createAuthUserWithEmailAndPassword, createUserDocumentFromAuth, signInWithGooglePopup, signInAuthUserWithEmailAndPassword} from '../../utils/firebase/firebase.utils'
+import {
+    createUserDocumentFromAuth, 
+    signInWithGooglePopup, 
+    signInAuthUserWithEmailAndPassword} from '../../utils/firebase/firebase.utils'
 import FormInput from '../form-input/FormInput'
 import './sign-in-form.styles.scss'
 import Button from '../button/Button'
@@ -20,16 +23,15 @@ function SignInForm() {
 
     const signInWithGoogle = async () => {
         // destructure the response that we get after successfully signing in, to get the user object
-        const {user} = await signInWithGooglePopup();
-        // create user
-        const userDocRef = await createUserDocumentFromAuth(user);
+        await signInWithGooglePopup();
+    
+       
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await signInAuthUserWithEmailAndPassword(email, password);
-            console.log(response);
+            const {user} = await signInAuthUserWithEmailAndPassword(email, password);
             resetFormFields();
         }
 
@@ -51,12 +53,9 @@ function SignInForm() {
         }
     }
         
-
-        
     const handleChange = (e) => {
         const {name, value} = e.target;
         setFormFields({...formFields, [name]: value});
-        console.log(formFields)
     }
 
   return (

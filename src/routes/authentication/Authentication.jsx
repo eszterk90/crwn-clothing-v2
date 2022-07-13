@@ -1,35 +1,23 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import './authentication.styles.scss'
-import {auth, signInWithGooglePopup, createUserDocumentFromAuth, signInWithGoogleRedirect} from '../../utils/firebase/firebase.utils'
-import {getRedirectResult} from 'firebase/auth'
 import SignUpForm from '../../components/sign-up/SignUpForm'
 import SignInForm from '../../components/sign-in/SignInForm'
-import FormInput from '../../components/form-input/FormInput'
+
 
 
 function Authentication() {
 
-
-
 // on first mount run the useEffect: inside call the asyncrhonous getRedirectResult. If authentication successful -> give response 
-    useEffect(async () => {
-        // if the authentication happened --> give back the result of the redirect as a response
-        const response = await getRedirectResult(auth);
-        console.log(response);
+    // useEffect(async () => {
+    //     // if the authentication happened --> give back the result of the redirect as a response
+    //     const response = await getRedirectResult(auth);
+    //     console.log(response);
 
-        // if response true --> generate the user doc reference
-        if(response) {
-            const userDocRef = await createUserDocumentFromAuth(response.user);
-        }
-    }, []);
-
-
-    const logGoogleUser = async () => {
-        // destructure the response that we get after successfully signing in, to get the user object
-        const {user} = await signInWithGooglePopup();
-        // create user
-        const userDocRef = await createUserDocumentFromAuth(user);
-    }
+    //     // if response true --> generate the user doc reference
+    //     if(response) {
+    //         const userDocRef = await createUserDocumentFromAuth(response.user);
+    //     }
+    // }, []);
 
 
    // const logGoogleRedirectUser = async () => {
@@ -43,8 +31,6 @@ function Authentication() {
   return (
     <div className='authentication-container'>
         <SignInForm/>
-        {/*<button onClick={logGoogleUser}>SIGN IN WITH GOOGLE</button>*/}
-        {/* <button onClick={signInWithGoogleRedirect}>Sign in with google Redirect</button> */}
         <SignUpForm/>
     </div>
   )

@@ -1,5 +1,14 @@
 import {initializeApp} from 'firebase/app';
-import {getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth'
+import {
+    getAuth, 
+    signInWithRedirect, 
+    signInWithPopup, 
+    GoogleAuthProvider, 
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword, 
+    signOut, 
+    onAuthStateChanged
+} from 'firebase/auth'
 // to set up our database import getFirestore. Import doc to get the document and getDoc, setDoc to get and set the data of the document.
 import {getFirestore, doc, getDoc, setDoc} from 'firebase/firestore'
 
@@ -52,7 +61,12 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInformation
         const createdAt = new Date();
 
         try {
-            await setDoc(userDocRef, {displayName, email, createdAt, ...additionalInformation})
+            await setDoc(userDocRef, {
+                displayName, 
+                email, 
+                createdAt, 
+                ...additionalInformation
+            })
         }
         catch (error) {
             console.log('error creating the user', error.message);
@@ -75,6 +89,12 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 
     return await signInWithEmailAndPassword(auth, email, password);
 }
+
+export const signOutUser = () => {
+    signOut(auth);
+}
+// onAuthStateChangedListener will call the callback whenever the authentication state of auth change --> e.g. sing-in / sign-out
+export const onAuthStateChangedListener = (callback) => (onAuthStateChanged(auth, callback))
 
 
 
