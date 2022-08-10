@@ -5,12 +5,19 @@ import {CartContext} from '../../contexts/cart-item.context'
 
 function CartIcon() {
 
- const {toggleIsCartOpen} = useContext(CartContext)
+// const totalAmount = () => {
+//   let sum = 0;
+//   cartItems.map(item => sum += item.quantity)
+//   return sum;
+// }
 
+ const {toggleIsCartOpen, cartCount} = useContext(CartContext)
+
+ 
   return (
     <div className='cart-icon-container' onClick={toggleIsCartOpen}>
     <ShoppingIcon className='shopping-icon'/>
-    <span className='item-count'>0</span>
+    <span className='item-count'>{cartCount}</span>
     </div>
   )
 }
