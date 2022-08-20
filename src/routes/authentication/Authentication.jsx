@@ -1,5 +1,5 @@
 import React from 'react'
-import './authentication.styles.scss'
+import {AuthentificationContainer} from './authentication.styles'
 import SignUpForm from '../../components/sign-up/SignUpForm'
 import SignInForm from '../../components/sign-in/SignInForm'
 
@@ -29,10 +29,10 @@ function Authentication() {
     //}
 
   return (
-    <div className='authentication-container'>
+    <AuthentificationContainer>
         <SignInForm/>
         <SignUpForm/>
-    </div>
+    </AuthentificationContainer>
   )
 }
 

@@ -10,7 +10,7 @@ import {
     onAuthStateChanged
 } from 'firebase/auth'
 // to set up our database import getFirestore. Import doc to get the document and getDoc, setDoc to get and set the data of the document.
-import {getFirestore, doc, getDoc, setDoc} from 'firebase/firestore'
+import {getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs} from 'firebase/firestore'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -37,6 +37,39 @@ export const signInWithGoogleRedirect = () => signInWithRedirect(auth, provider)
 // instantiate our database:
 export const db = getFirestore();
 
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+    const collectionRef = collection(db, collectionKey);
+    const batch = writeBatch(db);
+    
+    objectsToAdd.forEach((object) => {
+        const docRef = doc(collectionRef, object.title.toLowerCase());
+        batch.set(docRef, object);
+    });
+
+    await batch.commit();
+    console.log('done')
+}
+
+export const getCategoriesAndDocuments = async () => {
+    const collectionRef = collection(db, 'categories');
+    const q = query(collectionRef);
+
+    const querySnapshot = await getDocs(q);
+    const categoryMap = querySnapshot.docs.reduce((acc, docSnaphot) => {
+        const {title, items} = docSnaphot.data();
+        //see hashtables:
+        //let myData = new Object();
+        //myData["The Beatles"] ="248.3";
+
+        // When you add data to a hashtable, you specify both a key and a value to go with it:
+        //myData["Pink Floyd"] ="110.1"
+
+        acc[title.toLowerCase()] = items;
+        return acc;
+    }, {});
+
+    return categoryMap;
+}
 // async function that receives a user documentation object from logGoogleUser:
 export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
     if (!userAuth) return;
