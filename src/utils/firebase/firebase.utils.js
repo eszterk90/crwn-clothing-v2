@@ -55,20 +55,10 @@ export const getCategoriesAndDocuments = async () => {
     const q = query(collectionRef);
 
     const querySnapshot = await getDocs(q);
-    const categoryMap = querySnapshot.docs.reduce((acc, docSnaphot) => {
-        const {title, items} = docSnaphot.data();
-        //see hashtables:
-        //let myData = new Object();
-        //myData["The Beatles"] ="248.3";
 
-        // When you add data to a hashtable, you specify both a key and a value to go with it:
-        //myData["Pink Floyd"] ="110.1"
-
-        acc[title.toLowerCase()] = items;
-        return acc;
-    }, {});
-
-    return categoryMap;
+    // map the querySnapshot.doc to return the categories as an array
+    return querySnapshot.docs.map(docSnapshot => docSnapshot.data());
+    
 }
 // async function that receives a user documentation object from logGoogleUser:
 export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
